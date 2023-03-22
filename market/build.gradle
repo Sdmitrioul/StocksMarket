@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'base'
 }
 
 group 'ru.skroba'
@@ -14,12 +15,27 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.slf4j:slf4j-api:2.0.0'
+    implementation 'ch.qos.logback:logback-classic:1.4.0'
+    implementation 'org.slf4j:log4j-over-slf4j:2.0.0'
+
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
+    implementation 'io.reactivex:rxnetty-http:0.5.3'
+    implementation 'io.netty:netty-all:4.1.86.Final'
+    implementation 'io.reactivex:rxnetty-tcp:0.5.2'
+    implementation 'io.reactivex:rxnetty-common:0.5.2'
+    implementation 'org.mongodb:mongodb-driver-rx:1.5.0'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
 application {
     mainClass = 'ru.skroba.Market'
+}
+
+run {
+    environment = env.allVariables
 }
 
 test {
