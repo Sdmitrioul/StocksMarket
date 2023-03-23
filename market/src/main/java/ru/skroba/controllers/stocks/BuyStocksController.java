@@ -33,7 +33,7 @@ public class BuyStocksController extends BaseStockController {
             return service.buyStocks(companyName, amount)
                     .map(it -> new BaseMessage(200, "Success").toString());
         } catch (ServiceException e) {
-            throw new ControllerException(400, e);
+            throw new ControllerException(400, e.getMessage(), e);
         }
     }
 }

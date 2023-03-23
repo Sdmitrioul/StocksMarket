@@ -37,7 +37,7 @@ public class UpdateCompanyStocksController extends BaseStockController {
                         }
                     });
         } catch (ServiceException e) {
-            throw new ControllerException(400, e);
+            throw new ControllerException(400, e.getMessage(), e);
         }
     }
     

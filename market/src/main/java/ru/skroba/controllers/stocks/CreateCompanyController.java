@@ -33,7 +33,7 @@ public class CreateCompanyController extends BaseStockController {
             return service.addCompany(companyName, rate)
                     .map(it -> new BaseMessage(201, "Success").toString());
         } catch (ServiceException e) {
-            throw new ControllerException(400, e);
+            throw new ControllerException(400, e.getMessage(), e);
         }
     }
 }
