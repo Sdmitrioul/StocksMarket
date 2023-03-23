@@ -20,11 +20,10 @@ public class MongoStocksRepository extends AbstractRepository implements StocksR
     }
     
     @Override
-    public Observable<Boolean> addCompany(final CompanyStocks company) {
+    public Observable<Success> addCompany(final CompanyStocks company) {
         return manageCompanyStocks(company.companyName(),
                 v -> Observable.error(new RepositoryException("Company already exist!")),
-                () -> getCollection().insertOne(CompanyStocksFactory.toDocument(company))
-                        .map(s -> s.equals(Success.SUCCESS)));
+                () -> getCollection().insertOne(CompanyStocksFactory.toDocument(company)));
     }
     
     @Override
@@ -42,8 +41,8 @@ public class MongoStocksRepository extends AbstractRepository implements StocksR
     }
     
     @Override
-    public Observable<Success> updateCompanyStocks(final Function<CompanyStocks, CompanyStocks> updater,
-                                                   final String companyName) {
+    public Observable<Success> updateCompanyStocks(final String companyName,
+                                                   final Function<CompanyStocks, CompanyStocks> updater) {
         return manageCompanyStocks(companyName,
                 prev -> getCollection().replaceOne(Filters.eq(COMPANY_NAME, companyName),
                                 CompanyStocksFactory.toDocument(updater.apply(prev)))
