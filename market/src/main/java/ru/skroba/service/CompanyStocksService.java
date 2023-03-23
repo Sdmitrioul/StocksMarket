@@ -50,9 +50,10 @@ public final class CompanyStocksService {
         }
     }
     
-    public Observable<Success> updateStocksRate(String companyName) throws ServiceException {
+    public Observable<CompanyStocks> updateStocksRate(String companyName) throws ServiceException {
         try {
-            return repository.updateCompanyStocks(companyName, CompanyStocks::randomUpdatePrice);
+            return repository.updateCompanyStocks(companyName, CompanyStocks::randomUpdatePrice)
+                    .flatMap(it -> repository.getCompany(companyName));
         } catch (RepositoryException e) {
             throw new ServiceException("Can't update stocks of company %s!\n".formatted(companyName) + e.getMessage(),
                     e);
