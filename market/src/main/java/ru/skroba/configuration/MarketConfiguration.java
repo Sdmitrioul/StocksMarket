@@ -2,11 +2,11 @@ package ru.skroba.configuration;
 
 import ru.skroba.controllers.Controller;
 import ru.skroba.controllers.MasterController;
-import ru.skroba.controllers.stocks.BuyStocksController;
-import ru.skroba.controllers.stocks.CreateCompanyController;
-import ru.skroba.controllers.stocks.GetAllStocksController;
-import ru.skroba.controllers.stocks.SellStocksController;
-import ru.skroba.controllers.stocks.UpdateCompanyStocksController;
+import ru.skroba.controllers.BuyStocksController;
+import ru.skroba.controllers.CreateCompanyController;
+import ru.skroba.controllers.GetAllStocksController;
+import ru.skroba.controllers.SellStocksController;
+import ru.skroba.controllers.UpdateCompanyStocksController;
 import ru.skroba.repository.Database;
 import ru.skroba.repository.MongoStocksRepository;
 import ru.skroba.repository.StocksRepository;

@@ -1,4 +1,4 @@
-package ru.skroba.model.stocks;
+package ru.skroba.model;
 
 import org.bson.Document;
 

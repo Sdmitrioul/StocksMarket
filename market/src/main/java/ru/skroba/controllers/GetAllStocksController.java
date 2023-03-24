@@ -1,4 +1,4 @@
-package ru.skroba.controllers.stocks;
+package ru.skroba.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.handler.codec.http.HttpMethod;

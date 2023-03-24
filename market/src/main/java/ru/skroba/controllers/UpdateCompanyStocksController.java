@@ -1,11 +1,11 @@
-package ru.skroba.controllers.stocks;
+package ru.skroba.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.handler.codec.http.HttpMethod;
 import io.reactivex.netty.protocol.http.server.HttpServerRequest;
 import ru.skroba.exceptions.ControllerException;
 import ru.skroba.exceptions.ServiceException;
-import ru.skroba.model.stocks.CompanyStocks;
+import ru.skroba.model.CompanyStocks;
 import ru.skroba.service.CompanyStocksService;
 import rx.Observable;
 

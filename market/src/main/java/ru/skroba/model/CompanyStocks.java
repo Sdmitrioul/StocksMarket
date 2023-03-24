@@ -1,4 +1,4 @@
-package ru.skroba.model.stocks;
+package ru.skroba.model;
 
 public record CompanyStocks(String companyName, double price, long count) {
     public CompanyStocks sellStocks(long count) {

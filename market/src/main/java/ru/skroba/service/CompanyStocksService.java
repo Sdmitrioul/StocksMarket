@@ -3,13 +3,13 @@ package ru.skroba.service;
 import com.mongodb.rx.client.Success;
 import ru.skroba.exceptions.RepositoryException;
 import ru.skroba.exceptions.ServiceException;
-import ru.skroba.model.stocks.CompanyStocks;
+import ru.skroba.model.CompanyStocks;
 import ru.skroba.repository.StocksRepository;
 import rx.Observable;
 
 import java.util.List;
 
-import static ru.skroba.model.stocks.CompanyStocksFactory.DEFAULT_COUNT_OF_STOCKS;
+import static ru.skroba.model.CompanyStocksFactory.DEFAULT_COUNT_OF_STOCKS;
 
 public final class CompanyStocksService {
     private final StocksRepository repository;

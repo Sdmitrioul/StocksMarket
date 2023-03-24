@@ -1,4 +1,4 @@
-package ru.skroba.controllers.stocks;
+package ru.skroba.controllers;
 
 import io.netty.handler.codec.http.HttpMethod;
 import io.reactivex.netty.protocol.http.server.HttpServerRequest;
@@ -10,7 +10,7 @@ import rx.Observable;
 
 import java.util.List;
 
-import static ru.skroba.model.stocks.CompanyStocksFactory.COMPANY_NAME;
+import static ru.skroba.model.CompanyStocksFactory.COMPANY_NAME;
 
 public class CreateCompanyController extends BaseStockController {
     private static final String COMPANY = "company";

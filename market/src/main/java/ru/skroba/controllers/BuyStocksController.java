@@ -1,4 +1,4 @@
-package ru.skroba.controllers.stocks;
+package ru.skroba.controllers;
 
 import io.netty.handler.codec.http.HttpMethod;
 import io.reactivex.netty.protocol.http.server.HttpServerRequest;
@@ -10,14 +10,14 @@ import rx.Observable;
 
 import java.util.List;
 
-import static ru.skroba.model.stocks.CompanyStocksFactory.COMPANY_NAME;
+import static ru.skroba.model.CompanyStocksFactory.COMPANY_NAME;
 
-public class SellStocksController extends BaseStockController {
+public class BuyStocksController extends BaseStockController {
     private static final String COMPANY = "company";
     private static final String AMOUNT = "amount";
     
-    public SellStocksController(final CompanyStocksService service) {
-        super("/stocks/sell", HttpMethod.POST, service);
+    public BuyStocksController(final CompanyStocksService service) {
+        super("/stocks/buy", HttpMethod.POST, service);
     }
     
     @Override
@@ -30,7 +30,7 @@ public class SellStocksController extends BaseStockController {
         long amount = getLongParam(request, AMOUNT);
         
         try {
-            return service.sellStocks(companyName, amount)
+            return service.buyStocks(companyName, amount)
                     .map(it -> new BaseMessage(200, "Success").toString());
         } catch (ServiceException e) {
             throw new ControllerException(400, e.getMessage(), e);

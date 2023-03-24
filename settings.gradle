@@ -1,3 +1,4 @@
 rootProject.name = 'StocksMarket'
 include 'user'
 include 'market'
+include 'lib'

@@ -3,14 +3,14 @@ package ru.skroba.repository;
 import com.mongodb.client.model.Filters;
 import com.mongodb.rx.client.Success;
 import ru.skroba.exceptions.RepositoryException;
-import ru.skroba.model.stocks.CompanyStocks;
-import ru.skroba.model.stocks.CompanyStocksFactory;
+import ru.skroba.model.CompanyStocks;
+import ru.skroba.model.CompanyStocksFactory;
 import rx.Observable;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static ru.skroba.model.stocks.CompanyStocksFactory.COMPANY_NAME;
+import static ru.skroba.model.CompanyStocksFactory.COMPANY_NAME;
 
 public class MongoStocksRepository extends AbstractRepository implements StocksRepository {
     private static final String COLLECTION_NAME = "company_stocks";

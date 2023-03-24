@@ -1,8 +1,7 @@
-package ru.skroba.controllers.stocks;
+package ru.skroba.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.handler.codec.http.HttpMethod;
-import ru.skroba.controllers.BaseController;
 import ru.skroba.service.CompanyStocksService;
 
 public abstract class BaseStockController extends BaseController {

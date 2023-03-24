@@ -1,7 +1,7 @@
 package ru.skroba.repository;
 
 import com.mongodb.rx.client.Success;
-import ru.skroba.model.stocks.CompanyStocks;
+import ru.skroba.model.CompanyStocks;
 import rx.Observable;
 
 import java.util.function.Function;

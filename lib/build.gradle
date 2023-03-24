@@ -1,21 +1,10 @@
 plugins {
     id 'java'
-    id 'application'
     id 'base'
 }
 
-group 'ru.skroba'
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-repositories {
-    mavenCentral()
-    google()
-}
-
 dependencies {
-    implementation project(':lib')
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7.1'
 
     implementation 'org.slf4j:slf4j-api:2.0.0'
     implementation 'ch.qos.logback:logback-classic:1.4.0'
@@ -32,12 +21,14 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
-application {
-    mainClass = 'ru.skroba.User'
-}
+group 'ru.skroba'
 
-run {
-    environment = env.allVariables
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+    google()
 }
 
 test {
