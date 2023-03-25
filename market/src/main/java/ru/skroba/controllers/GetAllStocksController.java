@@ -22,7 +22,7 @@ public class GetAllStocksController extends BaseStockController {
                     try {
                         return Observable.just(json.writeValueAsString(res));
                     } catch (JsonProcessingException e) {
-                        throw new ControllerException(500, "Can't parse json!", e);
+                        return  Observable.error(new ControllerException(500, "Can't parse json!", e));
                     }
                 });
     }

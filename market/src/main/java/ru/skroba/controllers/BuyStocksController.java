@@ -3,7 +3,6 @@ package ru.skroba.controllers;
 import io.netty.handler.codec.http.HttpMethod;
 import io.reactivex.netty.protocol.http.server.HttpServerRequest;
 import ru.skroba.exceptions.ControllerException;
-import ru.skroba.exceptions.ServiceException;
 import ru.skroba.model.BaseMessage;
 import ru.skroba.service.CompanyStocksService;
 import rx.Observable;
@@ -29,11 +28,7 @@ public class BuyStocksController extends BaseStockController {
         String companyName = getQueryParam(request, COMPANY_NAME);
         long amount = getLongParam(request, AMOUNT);
         
-        try {
-            return service.buyStocks(companyName, amount)
-                    .map(it -> new BaseMessage(200, "Success").toString());
-        } catch (ServiceException e) {
-            throw new ControllerException(400, e.getMessage(), e);
-        }
+        return service.buyStocks(companyName, amount)
+                .map(it -> new BaseMessage(200, "Success").toString());
     }
 }

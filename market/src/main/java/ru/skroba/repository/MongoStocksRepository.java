@@ -43,16 +43,22 @@ public class MongoStocksRepository extends AbstractRepository implements StocksR
     @Override
     public Observable<Success> updateCompanyStocks(final String companyName,
                                                    final Function<CompanyStocks, CompanyStocks> updater) {
-        return manageCompanyStocks(companyName,
-                prev -> getCollection().replaceOne(Filters.eq(COMPANY_NAME, companyName),
+        return manageCompanyStocks(companyName, prev -> {
+            try {
+                return getCollection().replaceOne(Filters.eq(COMPANY_NAME, companyName),
                                 CompanyStocksFactory.toDocument(updater.apply(prev)))
-                        .map(res -> {
+                        .flatMap(res -> {
                             if (res.getModifiedCount() == 1) {
-                                return Success.SUCCESS;
+                                return Observable.just(Success.SUCCESS);
                             }
                             
-                            throw new RepositoryException("Can't update stocks of company: " + companyName);
-                        }));
+                            return Observable.error(
+                                    new RepositoryException("Can't update stocks of company: " + companyName));
+                        });
+            } catch (RepositoryException e) {
+                return Observable.error(e);
+            }
+        });
     }
     
     private <T> Observable<T> manageCompanyStocks(String companyName,

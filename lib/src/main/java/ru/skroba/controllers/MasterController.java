@@ -22,7 +22,9 @@ public final class MasterController implements Controller {
             return controllers.stream()
                     .filter(controller -> controller.canAccept(request))
                     .findAny()
-                    .map(controller -> controller.processRequest(request))
+                    .map(controller -> controller.processRequest(request)
+                            .onErrorReturn(e -> e instanceof ControllerException ce ? new BaseMessage(ce.getCode(),
+                                    ce.getMessage()).toString() : new BaseMessage(400, e.getMessage()).toString()))
                     .orElse(Observable.just(new BaseMessage(500, "Server error!").toString()));
         } catch (ControllerException e) {
             return Observable.just(new BaseMessage(e.getCode(), e.getMessage()).toString());
