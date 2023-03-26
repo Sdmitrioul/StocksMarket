@@ -11,4 +11,6 @@ public interface StocksRepository {
     Observable<UserStocks> deleteStocks(long userId, String companyName);
     
     Observable<List<UserStocks>> getUserStocks(long userId);
+    
+    Observable<List<UserStocks>> getUserStocks(long userId, String companyName);
 }

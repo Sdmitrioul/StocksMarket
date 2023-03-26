@@ -23,7 +23,7 @@ public abstract class BuySellStocksClient extends BaseClient {
         super(host, PATH + pathPart);
     }
     
-    public Observable<Success> sendRequest(String company, long count) {
+    public Observable<Double> sendRequest(String company, long count) {
         try {
             var uri = buildUri(Map.of(COMPANY, company, AMOUNT, count));
             var request = HttpRequest.newBuilder()
@@ -38,13 +38,11 @@ public abstract class BuySellStocksClient extends BaseClient {
                     .getAsJsonObject();
             
             if (!json.has("code") || json.get("code")
-                    .getAsLong() != 200 || !json.has("message") || !json.get("message")
-                    .getAsString()
-                    .equals("Success")) {
+                    .getAsLong() != 200 || !json.has("message")) {
                 return Observable.error(new SerialException("Can't sell stocks"));
             }
             
-            return Observable.just(Success.SUCCESS);
+            return Observable.just(json.get("message").getAsDouble());
         } catch (URISyntaxException e) {
             return Observable.error(new ClientException("Exception while creating URI!"));
         } catch (IOException e) {

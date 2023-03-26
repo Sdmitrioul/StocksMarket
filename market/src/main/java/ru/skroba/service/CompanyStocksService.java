@@ -2,6 +2,7 @@ package ru.skroba.service;
 
 import com.mongodb.rx.client.Success;
 import ru.skroba.exceptions.RepositoryException;
+import ru.skroba.exceptions.ServiceException;
 import ru.skroba.model.CompanyStocks;
 import ru.skroba.repository.StocksRepository;
 import rx.Observable;
@@ -21,18 +22,24 @@ public final class CompanyStocksService {
         return repository.addCompany(new CompanyStocks(companyName, stocksRate, DEFAULT_COUNT_OF_STOCKS));
     }
     
-    public Observable<Success> buyStocks(String companyName, long count) {
-        return repository.updateCompanyStocks(companyName, prev -> {
-            if (prev.count() < count) {
-                throw new RepositoryException("Not enough stocks!");
-            }
-            
-            return prev.buyStocks(count);
-        });
+    public Observable<Double> buyStocks(String companyName, long count) {
+        return repository.getCompany(companyName)
+                .flatMap(it -> repository.updateCompanyStocks(companyName, prev -> {
+                            if (prev.count() < count) {
+                                throw new RepositoryException("Not enough stocks!");
+                            }
+                            
+                            return prev.buyStocks(count);
+                        })
+                        .flatMap(res -> res == Success.SUCCESS ? Observable.just(it.price() * count) : Observable.error(
+                                new ServiceException("Can't buy stocks!"))));
     }
     
-    public Observable<Success> sellStocks(String companyName, long count) {
-        return repository.updateCompanyStocks(companyName, prev -> prev.sellStocks(count));
+    public Observable<Double> sellStocks(String companyName, long count) {
+        return repository.getCompany(companyName)
+                .flatMap(it -> repository.updateCompanyStocks(companyName, prev -> prev.sellStocks(count))
+                        .flatMap(res -> res == Success.SUCCESS ? Observable.just(it.price() * count) : Observable.error(
+                                new ServiceException("Can't sell stocks!"))));
     }
     
     public Observable<CompanyStocks> updateStocksRate(String companyName) {

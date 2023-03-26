@@ -1,8 +1,11 @@
 package ru.skroba.service;
 
+import com.mongodb.rx.client.Success;
 import ru.skroba.client.MarketProvider;
+import ru.skroba.exceptions.ServiceException;
 import ru.skroba.model.stocks.CompanyStocks;
 import ru.skroba.model.stocks.StocksWithCost;
+import ru.skroba.model.stocks.UserStocks;
 import ru.skroba.model.user.User;
 import ru.skroba.repository.stocks.StocksRepository;
 import ru.skroba.repository.user.UserRepository;
@@ -30,11 +33,6 @@ public class UserService {
                 .map(it -> user);
     }
     
-    public Observable<User> addToUserBalance(long userId, double amount) {
-        return userRepository.upsertUser(userId, user -> user.addMoney(amount))
-                .flatMap(res -> userRepository.getUser(userId));
-    }
-    
     public Observable<Double> getUserAmountOfSavings(long userId) {
         return getUserStocksWithCost(userId).map(stocks -> stocks.stream()
                         .map(it -> it.cost() * it.count())
@@ -55,5 +53,26 @@ public class UserService {
     
     public Observable<User> getUser(long userId) {
         return userRepository.getUser(userId);
+    }
+    
+    public Observable<Success> sellUserStocks(long userId, String companyName) {
+        return stocksRepository.deleteStocks(userId, companyName)
+                .flatMap(userStocks -> market.sellStocks(companyName, userStocks.amount())
+                        .doOnError(e -> stocksRepository.addStocks(userStocks)
+                                .flatMap(it -> Observable.error(new ServiceException("Can't sell stocks"))))
+                        .flatMap(money -> addToUserBalance(userId, money).map(it -> Success.SUCCESS)));
+    }
+    
+    public Observable<User> addToUserBalance(long userId, double amount) {
+        return userRepository.upsertUser(userId, user -> user.addMoney(amount))
+                .flatMap(res -> userRepository.getUser(userId));
+    }
+    
+    public Observable<Success> buyStocks(long userId, String companyName, Long count) {
+        return market.buyStocks(companyName, count)
+                .flatMap(cost -> userRepository.upsertUser(userId,
+                                prev -> new User(userId, prev.userName(), prev.money() - cost))
+                        .flatMap(res -> stocksRepository.addStocks(new UserStocks(userId, companyName, count))
+                                .map(it -> Success.SUCCESS)));
     }
 }

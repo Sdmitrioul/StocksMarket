@@ -21,11 +21,11 @@ public class MarketProvider {
         this.stocksClient = stocksClient;
     }
     
-    public Observable<Success> buyStocks(String companyName, long count) {
+    public Observable<Double> buyStocks(String companyName, long count) {
         return buyClient.sendRequest(companyName, count);
     }
     
-    public Observable<Success> sellStocks(String companyName, long count) {
+    public Observable<Double> sellStocks(String companyName, long count) {
         return sellClient.sendRequest(companyName, count);
     }
     

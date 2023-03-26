@@ -29,6 +29,6 @@ public class BuyStocksController extends BaseStockController {
         long amount = getLongParam(request, AMOUNT);
         
         return service.buyStocks(companyName, amount)
-                .map(it -> new BaseMessage(200, "Success").toString());
+                .map(it -> new BaseMessage(200, it.toString()).toString());
     }
 }
