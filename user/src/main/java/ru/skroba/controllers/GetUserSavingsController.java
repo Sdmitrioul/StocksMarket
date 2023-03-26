@@ -14,7 +14,7 @@ public class GetUserSavingsController extends BaseUserController {
     private static final String CONTROLLER_PATH = "/user/savings";
     private static final String USER = "uid";
     
-    protected GetUserSavingsController(final UserService service) {
+    public GetUserSavingsController(final UserService service) {
         super(CONTROLLER_PATH, HttpMethod.GET, service);
     }
     

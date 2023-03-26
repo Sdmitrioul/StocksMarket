@@ -16,7 +16,7 @@ public class BuyStocksController extends BaseUserController {
     
     private static final String CONTROLLER_PATH = "/stocks/buy";
     
-    protected BuyStocksController(final UserService service) {
+    public BuyStocksController(final UserService service) {
         super(CONTROLLER_PATH, HttpMethod.POST, service);
     }
     

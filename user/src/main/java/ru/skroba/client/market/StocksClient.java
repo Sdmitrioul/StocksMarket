@@ -18,7 +18,7 @@ import java.util.Map;
 public class StocksClient extends BaseClient {
     private final static String PATH = "/";
     
-    protected StocksClient(final String host) {
+    public StocksClient(final String host) {
         super(host, PATH);
     }
     

@@ -1,6 +1,5 @@
 package ru.skroba.client;
 
-import com.mongodb.rx.client.Success;
 import ru.skroba.client.market.BuyStocksClient;
 import ru.skroba.client.market.SellStocksClient;
 import ru.skroba.client.market.StocksClient;
@@ -14,11 +13,10 @@ public class MarketProvider {
     private final SellStocksClient sellClient;
     private final StocksClient stocksClient;
     
-    public MarketProvider(final BuyStocksClient buyClient, final SellStocksClient sellClient,
-                          final StocksClient stocksClient) {
-        this.buyClient = buyClient;
-        this.sellClient = sellClient;
-        this.stocksClient = stocksClient;
+    public MarketProvider(final String host) {
+        this.buyClient = new BuyStocksClient(host);
+        this.sellClient = new SellStocksClient(host);
+        this.stocksClient = new StocksClient(host);
     }
     
     public Observable<Double> buyStocks(String companyName, long count) {

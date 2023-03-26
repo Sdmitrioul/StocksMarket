@@ -16,7 +16,7 @@ public class RegisterUserController extends BaseUserController {
     
     private static final String CONTROLLER_PATH = "/user/register";
     
-    protected RegisterUserController(final UserService service) {
+    public RegisterUserController(final UserService service) {
         super(CONTROLLER_PATH, HttpMethod.POST, service);
     }
     

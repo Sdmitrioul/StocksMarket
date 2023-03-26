@@ -15,7 +15,7 @@ public class AddMoneyController extends BaseUserController {
     
     private static final String CONTROLLER_PATH = "/user/money";
     
-    protected AddMoneyController(final UserService service) {
+    public AddMoneyController(final UserService service) {
         super(CONTROLLER_PATH, HttpMethod.POST, service);
     }
     
