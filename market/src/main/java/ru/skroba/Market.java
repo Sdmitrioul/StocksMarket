@@ -13,7 +13,7 @@ public class Market {
     
     public void run(MarketConfiguration configuration) {
         Controller controller = configuration.getController();
-        HttpServer.newServer(configuration.getServerPort())
+        HttpServer.newServer( configuration.getServerPort())
                 .start(((request, response) -> response.writeString(controller.processRequest(request))))
                 .awaitShutdown();
     }

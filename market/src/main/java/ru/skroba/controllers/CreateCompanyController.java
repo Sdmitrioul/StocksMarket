@@ -9,8 +9,6 @@ import rx.Observable;
 
 import java.util.List;
 
-import static ru.skroba.model.CompanyStocksFactory.COMPANY_NAME;
-
 public class CreateCompanyController extends BaseStockController {
     private static final String COMPANY = "company";
     private static final String RATE = "rate";
@@ -25,7 +23,7 @@ public class CreateCompanyController extends BaseStockController {
             throw new ControllerException(400, res);
         });
         
-        String companyName = getQueryParam(request, COMPANY_NAME);
+        String companyName = getQueryParam(request, COMPANY);
         double rate = getDoubleParam(request, RATE);
         
         return service.addCompany(companyName, rate)

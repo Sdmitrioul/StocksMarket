@@ -26,7 +26,8 @@ public class MarketConfiguration {
     private CompanyStocksService stocksService;
     
     public int getServerPort() {
-        return Integer.parseInt(System.getenv(MARKET_PORT));
+        return Integer.parseInt(System.getenv()
+                .getOrDefault(MARKET_PORT, "8080"));
     }
     
     public Controller getController() {
@@ -59,7 +60,9 @@ public class MarketConfiguration {
     
     public Database getDatabase() {
         if (database == null) {
-            database = new Database(Integer.parseInt(System.getenv(DB_PORT)), System.getenv(DB_NAME));
+            database = new Database(Integer.parseInt(System.getenv()
+                    .getOrDefault(DB_PORT, "27017")), System.getenv()
+                    .getOrDefault(DB_NAME, "market_dao"));
         }
         
         return database;

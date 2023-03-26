@@ -72,7 +72,7 @@ public class MongoStocksRepository extends AbstractRepository implements StocksR
     
     private <T> Observable<T> manageCompanyStocks(String companyName, Function<CompanyStocks, Observable<T>> ifPresent,
                                                   Supplier<Observable<T>> otherwise) {
-        return getCompany(companyName).onErrorReturn(null)
+        return getCompany(companyName).onErrorReturn(e -> null)
                 .flatMap(value -> {
                     if (value == null) {
                         return otherwise.get();

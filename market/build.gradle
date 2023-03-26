@@ -2,9 +2,11 @@ plugins {
     id 'java'
     id 'application'
     id 'base'
+    id "com.palantir.docker" version "0.34.0"
 }
 
 group 'ru.skroba'
+version '0.1.0'
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
@@ -32,6 +34,15 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+}
+
+docker.dependsOn build as Task
+
+docker {
+    name "${project.name}:${project.version}-SNAPSHOT"
+    files jar.archiveFile
+    dockerfile file('Dockerfile')
+    buildArgs([JAR_FILE: "market-0.1.0.jar"])
 }
 
 application {

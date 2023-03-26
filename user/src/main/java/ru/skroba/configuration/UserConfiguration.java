@@ -24,6 +24,7 @@ public class UserConfiguration {
     private static final String DB_NAME = "USER_DB_NAME";
     private static final String DB_PORT = "USER_DB_PORT";
     private static final String MARKET_HOST = "MARKET_HOST";
+    private static final String MARKET_PORT = "MARKET_PORT";
     private final String marketHost;
     private Database database;
     private UserRepository userRepository;
@@ -32,7 +33,7 @@ public class UserConfiguration {
     private MarketProvider marketProvider;
     
     public UserConfiguration() {
-        this.marketHost = System.getenv(MARKET_HOST);
+        this.marketHost = System.getenv(MARKET_HOST) + ":" + System.getenv(MARKET_PORT);
     }
     
     public UserConfiguration(String marketHost) {

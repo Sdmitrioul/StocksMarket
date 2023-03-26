@@ -22,7 +22,7 @@ public class MongoUserRepository extends AbstractRepository implements UserRepos
     
     private <T> Observable<T> manageUser(long uid, Function<User, Observable<T>> ifPresent,
                                          Supplier<Observable<T>> otherwise) {
-        return getUser(uid).onErrorReturn(null)
+        return getUser(uid).onErrorReturn(e -> null)
                 .flatMap(value -> {
                     if (value == null) {
                         return otherwise.get();

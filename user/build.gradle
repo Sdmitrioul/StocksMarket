@@ -31,12 +31,13 @@ dependencies {
     implementation 'io.reactivex:rxnetty-common:0.5.2'
     implementation 'org.mongodb:mongodb-driver-rx:1.5.0'
 
+    testImplementation "org.testcontainers:junit-jupiter:1.17.6"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
 application {
-    mainClass = 'ru.skroba.User'
+    mainClass = 'ru.skroba.UserWorker'
 }
 
 run {
