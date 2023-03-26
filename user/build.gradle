@@ -21,6 +21,8 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.4.0'
     implementation 'org.slf4j:log4j-over-slf4j:2.0.0'
 
+    implementation 'com.google.code.gson:gson:2.10.1'
+
     implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
     implementation 'io.reactivex:rxnetty-http:0.5.3'
     implementation 'io.netty:netty-all:4.1.86.Final'
