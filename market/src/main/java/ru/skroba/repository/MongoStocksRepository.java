@@ -37,7 +37,10 @@ public class MongoStocksRepository extends AbstractRepository implements StocksR
     public Observable<CompanyStocks> getCompany(final String companyName) {
         return getCollection().find(Filters.eq(COMPANY_NAME, companyName))
                 .toObservable()
-                .map(CompanyStocksFactory::of);
+                .map(CompanyStocksFactory::of)
+                .defaultIfEmpty(null)
+                .flatMap(stocks -> stocks == null ? Observable.error(
+                        new RepositoryException("No such company!")) : Observable.just(stocks));
     }
     
     @Override
@@ -69,7 +72,7 @@ public class MongoStocksRepository extends AbstractRepository implements StocksR
     
     private <T> Observable<T> manageCompanyStocks(String companyName, Function<CompanyStocks, Observable<T>> ifPresent,
                                                   Supplier<Observable<T>> otherwise) {
-        return getCompany(companyName).defaultIfEmpty(null)
+        return getCompany(companyName).onErrorReturn(null)
                 .flatMap(value -> {
                     if (value == null) {
                         return otherwise.get();
