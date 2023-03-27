@@ -26,7 +26,7 @@ public final class CompanyStocksService {
         return repository.getCompany(companyName)
                 .flatMap(it -> repository.updateCompanyStocks(companyName, prev -> {
                             if (prev.count() < count) {
-                                throw new RepositoryException("Not enough stocks!");
+                                Observable.error(new RepositoryException("Not enough stocks!"));
                             }
                             
                             return prev.buyStocks(count);

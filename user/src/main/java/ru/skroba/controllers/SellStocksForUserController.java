@@ -9,12 +9,12 @@ import rx.Observable;
 
 import java.util.List;
 
-public class SellStocksController extends BaseUserController {
+public class SellStocksForUserController extends BaseUserController {
     private static final String COMPANY = "company";
     private static final String USER = "uid";
     private static final String CONTROLLER_PATH = "/stocks/sell";
     
-    public SellStocksController(final UserService service) {
+    public SellStocksForUserController(final UserService service) {
         super(CONTROLLER_PATH, HttpMethod.POST, service);
     }
     

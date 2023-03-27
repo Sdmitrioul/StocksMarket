@@ -1,7 +1,6 @@
 package ru.skroba.client.market;
 
 import com.google.gson.JsonParser;
-import com.mongodb.rx.client.Success;
 import ru.skroba.client.BaseClient;
 import ru.skroba.exceptions.ClientException;
 import rx.Observable;
@@ -31,10 +30,9 @@ public abstract class BuySellStocksClient extends BaseClient {
                     .POST(HttpRequest.BodyPublishers.noBody())
                     .build();
             
-            var result = client.send(request, HttpResponse.BodyHandlers.ofString())
-                    .body();
+            var result = client.send(request, HttpResponse.BodyHandlers.ofString());
             
-            var json = JsonParser.parseString(result)
+            var json = JsonParser.parseString(result.body())
                     .getAsJsonObject();
             
             if (!json.has("code") || json.get("code")
@@ -42,7 +40,8 @@ public abstract class BuySellStocksClient extends BaseClient {
                 return Observable.error(new SerialException("Can't sell stocks"));
             }
             
-            return Observable.just(json.get("message").getAsDouble());
+            return Observable.just(json.get("message")
+                    .getAsDouble());
         } catch (URISyntaxException e) {
             return Observable.error(new ClientException("Exception while creating URI!"));
         } catch (IOException e) {

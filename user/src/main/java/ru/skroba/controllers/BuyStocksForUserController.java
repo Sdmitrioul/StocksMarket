@@ -9,14 +9,14 @@ import rx.Observable;
 
 import java.util.List;
 
-public class BuyStocksController extends BaseUserController {
+public class BuyStocksForUserController extends BaseUserController {
     private static final String COMPANY = "company";
     private static final String USER = "uid";
     private static final String AMOUNT = "amount";
     
     private static final String CONTROLLER_PATH = "/stocks/buy";
     
-    public BuyStocksController(final UserService service) {
+    public BuyStocksForUserController(final UserService service) {
         super(CONTROLLER_PATH, HttpMethod.POST, service);
     }
     

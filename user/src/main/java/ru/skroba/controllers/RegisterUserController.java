@@ -11,7 +11,7 @@ import rx.Observable;
 import java.util.List;
 
 public class RegisterUserController extends BaseUserController {
-    private final static String USER = "user_name";
+    private final static String USER = "user";
     private final static String BALANCE = "balance";
     
     private static final String CONTROLLER_PATH = "/user/register";

@@ -2,13 +2,13 @@ package ru.skroba.configuration;
 
 import ru.skroba.client.MarketProvider;
 import ru.skroba.controllers.AddMoneyController;
-import ru.skroba.controllers.BuyStocksController;
+import ru.skroba.controllers.BuyStocksForUserController;
 import ru.skroba.controllers.Controller;
 import ru.skroba.controllers.GetUserSavingsController;
 import ru.skroba.controllers.GetUserStocks;
 import ru.skroba.controllers.MasterController;
 import ru.skroba.controllers.RegisterUserController;
-import ru.skroba.controllers.SellStocksController;
+import ru.skroba.controllers.SellStocksForUserController;
 import ru.skroba.repository.Database;
 import ru.skroba.repository.stocks.MongoStocksRepository;
 import ru.skroba.repository.stocks.StocksRepository;
@@ -27,8 +27,8 @@ public class UserConfiguration {
     private static final String MARKET_PORT = "MARKET_PORT";
     private final String marketHost;
     private Database database;
-    private UserRepository userRepository;
-    private StocksRepository stocksRepository;
+    protected UserRepository userRepository;
+    protected StocksRepository stocksRepository;
     private UserService userService;
     private MarketProvider marketProvider;
     
@@ -44,16 +44,16 @@ public class UserConfiguration {
         List<Controller> controllers = new ArrayList<>();
         
         controllers.add(new AddMoneyController(getUserService()));
-        controllers.add(new BuyStocksController(getUserService()));
+        controllers.add(new BuyStocksForUserController(getUserService()));
         controllers.add(new GetUserSavingsController(getUserService()));
         controllers.add(new GetUserStocks(getUserService()));
         controllers.add(new RegisterUserController(getUserService()));
-        controllers.add(new SellStocksController(getUserService()));
+        controllers.add(new SellStocksForUserController(getUserService()));
         
         return new MasterController(controllers);
     }
     
-    private UserService getUserService() {
+    protected UserService getUserService() {
         if (userService == null) {
             userService = new UserService(getUserRepository(), getStockRepository(), getMarketProvider());
         }
@@ -61,7 +61,7 @@ public class UserConfiguration {
         return userService;
     }
     
-    private UserRepository getUserRepository() {
+    public UserRepository getUserRepository() {
         if (userRepository == null) {
             userRepository = new MongoUserRepository(getDatabase());
         }
@@ -69,7 +69,7 @@ public class UserConfiguration {
         return userRepository;
     }
     
-    private StocksRepository getStockRepository() {
+    public StocksRepository getStockRepository() {
         if (stocksRepository == null) {
             stocksRepository = new MongoStocksRepository(getDatabase());
         }
@@ -77,7 +77,7 @@ public class UserConfiguration {
         return stocksRepository;
     }
     
-    private MarketProvider getMarketProvider() {
+    public MarketProvider getMarketProvider() {
         if (marketProvider == null) {
             marketProvider = new MarketProvider(marketHost);
         }
