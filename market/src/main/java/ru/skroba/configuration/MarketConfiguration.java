@@ -1,10 +1,10 @@
 package ru.skroba.configuration;
 
-import ru.skroba.controllers.Controller;
-import ru.skroba.controllers.MasterController;
 import ru.skroba.controllers.BuyStocksController;
+import ru.skroba.controllers.Controller;
 import ru.skroba.controllers.CreateCompanyController;
 import ru.skroba.controllers.GetAllStocksController;
+import ru.skroba.controllers.MasterController;
 import ru.skroba.controllers.SellStocksController;
 import ru.skroba.controllers.UpdateCompanyStocksController;
 import ru.skroba.repository.Database;
@@ -61,7 +61,7 @@ public class MarketConfiguration {
     public Database getDatabase() {
         if (database == null) {
             database = new Database(Integer.parseInt(System.getenv()
-                    .getOrDefault(DB_PORT, "27017")), System.getenv()
+                    .getOrDefault(DB_PORT, "27017")), "host.docker.internal", System.getenv()
                     .getOrDefault(DB_NAME, "market_dao"));
         }
         

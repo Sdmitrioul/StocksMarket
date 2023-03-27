@@ -3,6 +3,7 @@ plugins {
     id 'application'
     id 'base'
     id "com.palantir.docker" version "0.34.0"
+    id 'com.github.johnrengelman.shadow' version "5.1.0"
 }
 
 group 'ru.skroba'
@@ -39,14 +40,27 @@ dependencies {
 docker.dependsOn build as Task
 
 docker {
-    name "${project.name}:${project.version}-SNAPSHOT"
-    files jar.archiveFile
+    name "${project.name}:${project.version}"
+    files shadowJar.archiveFile
     dockerfile file('Dockerfile')
-    buildArgs([JAR_FILE: "market-0.1.0.jar"])
+    noCache true
+    buildArgs([JAR_FILE: "market-0.1.0-all.jar"])
 }
 
 application {
     mainClass = 'ru.skroba.Market'
+}
+
+shadowJar {
+    mainClassName = 'ru.skroba.Market'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ru.skroba.Market'
+        )
+    }
 }
 
 run {

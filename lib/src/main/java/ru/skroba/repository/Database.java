@@ -20,6 +20,10 @@ public final class Database {
         this.client = MongoClients.create(this.url);
     }
     
+    public Database(final int port, final String host, final String dbName) {
+        this("mongodb://" + host + ":" + port, dbName);
+    }
+    
     public MongoDatabase getDatabase() {
         return client.getDatabase(this.dbName);
     }
